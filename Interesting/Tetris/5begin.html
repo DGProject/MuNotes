@@ -1,0 +1,414 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>block开始</title>
+</head>
+
+<body>
+	<canvas id="canvas" width="300px" height="400px" style="background-color:#cccccc">
+    	骚年你的浏览器不支持canvas
+    </canvas>
+	
+    <script type="text/javascript">
+		var isOver = false;
+		var canvas = document.getElementById("canvas");
+		
+		//速度
+		var speed =		 [1400,  1180,  980,  800,  640,  500,  380,  280,  200,  140,  100,  80,   70,   61,   53,   46,   40];
+		
+		//升级下级所需分数
+		var experience = [10,	 20,    30,   40,   50,   60,   70,   80,   90,   100,  110,  120,  130,  140,  150,  160,  65535];
+		
+		//等级表示
+		var level = 0;
+		
+		//最大等级
+		var maxLevel = 16;
+		
+		var rotate = 0; //旋转标志
+		var iniPosLeft = 3;//初始化
+		var iniPosTop = -4;//初始化
+		var magLeft = iniPosLeft;//距左
+		var magTop = iniPosTop;//距下
+		
+		var score = 0;//分数
+		var mark = [1,3,5,9];//消除行数获得分数数组
+		
+		var bolckArr;
+		
+		var cxt;
+		if(canvas.getContext){
+			ctx = canvas.getContext('2d');
+		}
+		
+		//界面数组初始化
+		var container = new Array();
+		for(var k=0; k<20; k++){
+			container[k]=new Array();
+			for(var j=0; j<10; j++){
+				container[k][j]="0";
+			}
+		}
+		
+		//制造所有方块类型
+		/*
+		████
+		████
+		*/
+		var B0 = new Array(['0000','0000','1100','1100']);
+		/*
+		██
+		██
+		██
+		██            ████████
+		*/
+		var B1 = new Array(['1000','1000','1000','1000'],['0000','0000','0000','1111']);
+		/*
+		████            ██
+		  ████        ████
+		              ██
+		*/
+		var B2 = new Array(['0000','0000','1100','0110'],['0000','0100','1100','1000']);
+		/*
+		  ████        ██
+		████          ████
+		                ██
+		*/
+		var B3 = new Array(['0000','0000','0110','1100'],['0000','1000','1100','0100']);
+		/*
+		██            ██████         ████              ██
+		██            ██               ██          ██████
+		████                           ██
+		*/
+		var B4 = new Array(['0000','1000','1000','1100'],['0000','0000','1110','1000'],['0000','1100','0100','0100'],['0000','0000','0010','1110']);
+		/*
+		  ██          ██             ████          ██████
+		  ██          ██████         ██                ██
+		████                         ██
+		*/
+		var B5 = new Array(['0000','0100','0100','1100'],['0000','0000','1000','1110'],['0000','1100','1000','1000'],['0000','0000','1110','0010']);
+		/*
+		  ██          ██             ██████          ██
+		██████        ████             ██          ████
+		              ██                             ██
+		*/
+		var B6 = new Array(['0000','0000','0100','1110'],['0000','1000','1100','1000'],['0000','0000','1110','0100'],['0000','0010','0110','0010']);
+		/*
+		    ██			██				██				██
+		██████			████		  ████         
+		██                 
+		*/
+		var block = new Array(B0,B1,B2,B3,B4,B5,B6);
+		
+		//随机获取方块
+		var c1 = Math.floor(Math.random()*7);
+		var c2 = Math.floor(Math.random()*7);
+		bolckArr = [c1,c2];
+		
+		
+		var temp = block[bolckArr[0]][0];
+		
+		//画分界线
+		ctx.fillStyle = 'yellow';//设置颜色
+		ctx.fillRect(201, 0, 5, 400);//坐标，大小
+		
+		
+		//画等级
+		ctx.font = "Bold 20px Arial";
+		ctx.textAlign = "left";
+		ctx.fillStyle = "#008600"; 
+		ctx.strokeText("LV:"+level, 230, 30);
+		
+		//画分数
+		ctx.font = "Bold 20px Arial"; // 设置字体
+		ctx.textAlign = "left";// 设置对齐方式
+		ctx.fillStyle = "#008600"; // 设置填充颜色
+		ctx.strokeText(score, 250, 60); // 绘制空心字
+		
+		
+		
+		//画后一个模型
+		var sss = block[bolckArr[1]][0];
+		for(var i = 0; i < 4; i++){
+			for(var j=0;j<4;j++){
+				if(sss[i][j] == 1){
+					ctx.fillStyle = 'blue';
+					ctx.fillRect(j*20+230,i*20+80,20,20);
+				}
+			}
+		}
+		
+		
+		//游戏begin开始下滑
+		setTimeout(fun, speed[level]);
+		function fun(){
+			//下落坐标
+			magTop++;
+			//刷新页面
+			ref();
+			if (isOver) {
+			
+				alert("游戏结束。");
+			} else {
+			
+				setTimeout(fun, speed[level]);
+			}
+		}
+		
+		
+		///点击事件捕捉  上38下40左37右39
+		function keyDown(e) {   
+			var keycode = e.which;
+			if(keycode == 38) {
+				//点一下设置旋转下标
+				if(rotate==block[bolckArr[0]].length-1)
+					rotate = 0;
+				else
+					rotate++;
+				
+				var isDef = true;
+				//是否超出最右边界
+				var blockLen = getRight(block[bolckArr[0]][rotate]);
+				if(magLeft+blockLen >= 10) {
+					isDef = false;
+				}
+				
+				//旋转前是否有障碍物
+				for(var i = 0;i<4;i++){
+					for(var j = 0;j<4;j++){
+						if(block[bolckArr[0]][rotate][i][j] == 1){
+							if(magTop + i >= 0 && magLeft + j >= 0){
+								if(container[magTop+i][magLeft+j] == '2')
+									isDef = false;
+							}
+						}
+					}
+				}
+				
+				if(isDef)
+				temp = block[bolckArr[0]][rotate];
+				
+				ref();
+			} else if(keycode == 40) {
+				magTop++;
+				ref();
+			} else if(keycode == 37) {
+				var flag = false;
+				var conLen = container.length;
+				for(var i = 0; i < conLen; i++){
+					//是否最左
+					if(container[i][0] == 1) {
+						flag =true;
+						break;
+					}
+					
+					//是否左边有障碍物
+					var conItmLen = container[i].length;
+					for(var j=1;j<conItmLen;j++){
+						if(container[i][j] == 1 && container[i][j-1] == 2){
+							flag =true;
+							break;
+						}
+					}
+				}
+				if(!flag){
+					magLeft--;
+					ref();
+				}
+			} else if (keycode == 39) {
+				var flag = false;
+				var conLen = container.length;
+				for(var i = 0; i < conLen; i++){
+					if(container[i][9] == 1) {
+						flag =true;
+						break;
+					}
+					var conItmLen = container[i].length;
+					for(var j=1;j<conItmLen;j++){
+						if(container[i][j] == 1 && container[i][j+1] == 2){
+							flag =true;
+							break;
+						}
+					}
+				}
+				if(!flag){
+					magLeft++;
+					ref();
+				}
+			}
+		}
+		document.onkeydown = keyDown;
+		
+		//重新布置方块
+		function addBlock(){
+		
+			//判断下落是否有方块阻碍
+			var flag = false;
+			var conLen = container.length-1;
+			for(var i=0;i<conLen; i++){
+				var conItmLen = container[i].length;
+				for(var j = 0; j < conItmLen; j++){
+					if(container[i][j] == 1 && container[i+1][j] == 2){
+						flag = true;
+						i = conLen;
+						break;
+					}
+				}
+			}
+			
+			//如果大于16(到最底层)或者下落是否有方块阻碍
+			if(magTop > 16 || flag){
+				//将方块1改为2
+				var conLen = container.length;
+				for(var i=0;i<conLen; i++) {
+					var conItmLen = container[i].length;
+					for(var j=0;j<conItmLen;j++) {
+						if(container[i][j] == 1) {
+							container[i][j] = '2';
+						}
+					}
+				}
+				
+				//消除行数  对应分数数组坐标
+				var rowCount = -1;
+				//将补全方块消除，并从头重新加入新数组
+				for(var i = container.length-1; i >= 0; i--) {
+					if(container[i] == '2,2,2,2,2,2,2,2,2,2') {
+						container.remove(i);
+						i++;
+						rowCount++;
+						var arr=new Array(0,0,0,0,0,0,0,0,0,0);
+						container.unshift(arr);
+					} else if(container[i] == '0,0,0,0,0,0,0,0,0,0') {
+						break;
+					}
+				}
+				if(rowCount >= 0) {
+				
+					score += mark[rowCount];
+					if (score > experience[level]/4 && level <= maxLevel) {
+					
+						level++;
+					}
+				}
+				
+				for(var i = container[0].length - 1; i >= 0; i--) {
+				
+					if(container[0][i] == "2") {
+					
+						isOver = true;
+						i = temp.length;
+						break;
+					}
+				}
+				
+				//重新初始化
+				rotate = 0; //旋转标志
+				magLeft = iniPosLeft;//距左
+				magTop = iniPosTop;//距下
+				c = Math.floor(Math.random()*7);
+				
+				bolckArr[0] = bolckArr[1];
+				bolckArr[1] = c;
+				temp = block[bolckArr[0]][0];
+				
+			} else {
+				//清除原先方块位置
+				for(var i=0;i<container.length; i++){
+					for(var j=0;j<container[i].length;j++){
+						if(container[i][j] == 1){
+							container[i][j] = '0';
+						}
+					}
+				}
+				//重新布置
+				for(var i = 0;i<4;i++){
+					for(var j = 0;j<4;j++){
+						if(temp[i][j] == 1){
+							if(magTop + i >= 0 && magLeft + j >= 0){
+								container[magTop+i][magLeft+j] = "1";
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		//刷新画面
+		function ref(){
+			
+			addBlock();
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			//消除画面操作，操作数据
+			var conLen = container.length;
+			for(var i = 0; i < conLen; i++){
+				var conItmLen = container[i].length;
+				for(var j=0;j<conItmLen;j++){
+					if(container[i][j] == 1){
+						ctx.fillStyle = 'blue';
+						ctx.fillRect(j*20,i*20,20,20);
+					} else if (container[i][j] == 2) {
+						ctx.fillStyle = 'black';
+						ctx.fillRect(j*20,i*20,20,20);
+					}
+				}
+			}
+			//画分界线
+			ctx.fillStyle = 'yellow';//设置颜色
+			ctx.fillRect(201, 0, 5, 400);//坐标，大小
+			
+			
+			//画等级
+			ctx.font = "Bold 20px Arial";
+			ctx.textAlign = "left";
+			ctx.fillStyle = "#008600";
+			ctx.strokeText("LV:"+level, 230, 30);
+			
+			//画分数
+			ctx.font = "Bold 20px Arial";
+			ctx.textAlign = "left";
+			ctx.fillStyle = "#008600";
+			ctx.strokeText(score, 250, 60);
+			
+			
+			
+			//画后一个模型
+			for(var i = 0; i < 4; i++){
+				for(var j=0;j<4;j++){
+					if(block[bolckArr[1]][0][i][j] == 1){
+						ctx.fillStyle = 'blue';
+						ctx.fillRect(j*20+230,i*20+80,20,20);
+					}
+				}
+			}
+		}
+		
+		//获取模型最右长度
+		function getRight(te) {
+			var maxLen = 0;
+			for(var i = 0; i < te.length; i++) {
+				varTemLen = 0;
+				for(var j = 0; j < te[i].length; j++) {
+					if(te[i][j] == 1)
+						varTemLen=j+1;
+				}
+				if(varTemLen > maxLen)
+					maxLen = varTemLen;
+			}
+			return maxLen;
+		}
+		
+		//定义Arrayremove方法
+		Array.prototype.remove = function(dx) {
+			if(isNaN(dx)||dx>this.length){return false;}
+			for(var i=0,n=0;i<this.length;i++)
+			{
+				if(this[i]!=this[dx])
+					this[n++]=this[i]
+			}
+			this.length-=1
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>box-sizing</title>
+    <style type="text/css">
+      body, header, footer, div, ul li {
+        margin: 0;
+        padding: 0;
+      }
+      header ,footer {
+        width: 100vw;
+        height: 10vh;
+        line-height: 10vh;
+        text-align: center;
+        background: #999999;
+      }
+      section {
+        width:  100vw;
+        height: 80vh;
+      }
+      section>div {
+        float: left;
+        height: 100%;
+        padding: 10px;
+        border: 5px solid yellow;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      .left {
+        width: 80vw;
+        background: red;
+      }
+      .right {
+        width: 20vw;
+        background: pink;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      this is header
+    </header>
+    <section>
+      <div class="left"></div>
+      <div class="right"></div>
+    </section>
+    <footer>
+      this is flooter
+    </footer>
+  </body>
+</html>

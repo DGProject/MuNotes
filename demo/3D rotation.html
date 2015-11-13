@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>3D效果测试</title>
+<style type="text/css">
+*{font-size: 14px;color: #fff; padding:0; margin:0;}
+#container {
+position: relative;
+height: 300px;
+width: 300px;
+-webkit-perspective: 900;
+margin-top: 200px;
+margin-right: auto;
+margin-left: auto;
+}
+#parent {
+margin: 10px;
+width: 280px;
+height: 280px;
+/*透明度*/
+opacity: 0.7;
+/*使被转换的子元素保留其 3D 转换*/
+-webkit-transform-style: preserve-3d;
+/*使用简写属性，将动画与 div 元素绑定*/
+-webkit-animation: spin 5s infinite linear;
+}
+#parent > div {
+position: absolute;
+text-align:center;
+line-height: 280px;
+width: 280px;
+height: 280px;
+padding: 10px;
+/*box-sizing 匹配该个区域的特定元素*/
+-webkit-box-sizing: border-box;
+}
+#parent > :nth-child(1) {/* 上 translateZ(-140px) 控制前后 */ 
+background-color: #fe0000;
+					/*X坐标旋转*/
+-webkit-transform: rotateX(90deg);
+top:-140px;
+}
+#parent > :nth-child(2) {/* 下 */ 
+background-color: #ff935a;
+-webkit-transform: rotateX(90deg);
+top:140px;
+}
+#parent > :nth-child(3) {/* 前 */ 
+background-color: #fff21d;
+					/*前后距离*/
+-webkit-transform: translateZ(-140px);
+}
+#parent > :nth-child(4) {/* 后 */ 
+background-color: #48ff1d;
+-webkit-transform: translateZ(140px);
+}
+#parent > :nth-child(5) {/* 后 */ 
+background-color: #285bff;
+					/*Y坐标旋转*/
+-webkit-transform: rotateY(90deg);
+left:140px;
+}
+#parent > :nth-child(6) {/* 后 */ 
+background-color: #d305ff;
+-webkit-transform: rotateY(90deg);
+left:-140px;
+}
+
+/*执行X.Y轴旋转360度动画*/
+@-webkit-keyframes spin {
+from {-webkit-transform: rotateY(0) rotateX(0);}
+to {-webkit-transform: rotateY(360deg) rotateX(360deg);}
+}
+</style>
+</head>
+<body>
+    <div id="container">
+        <div id="parent">
+            <div>元素1</div>
+            <div>元素2</div>
+            <div>元素3</div>
+            <div>元素4</div>
+            <div>元素5</div>
+            <div>元素6</div>
+        </div>
+    </div>
+</body>
+</html>

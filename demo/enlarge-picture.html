@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>裁图</title>
+    <style type="text/css">
+      .box {
+        width: 500px;
+        height: 280px;
+        margin: 100px;
+        position: relative;
+        overflow: hidden;
+      }
+      .box>img {
+        position: absolute;
+        width:500px;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        transition: width 1s;
+      }
+      img:hover {
+        width:600px;
+      }
+    </style>
+  </head>
+  <body>
+      <div class="box">
+        <img src="image/css.jpg">
+      </div>
+  </body>
+</html>

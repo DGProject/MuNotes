@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>无标题文档</title>
+<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	nav {
+		width: 100%;
+		height: 42px;
+	}
+	nav ul {
+		overflow: hidden;
+	}
+	nav ul li {
+		height: 40px;
+		line-height: 40px;
+		float: left;
+		list-style: none;
+		margin-left: 10px;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	nav #under-line {
+		position:absolute;
+		width: 62px;
+		height: 40px;
+		background-color:red;
+		margin-left: 10px;
+		transition: all 0.5s;
+		opacity: 0.5;
+	}
+</style>
+</head>
+
+<body>
+	<nav>
+        <div id="under-line"></div>
+    	<ul id="banner">
+        	<li class="tag">首页</li>
+        	<li class="tag">陨落星云</li>
+        	<li class="tag">寒霜</li>
+        	<li class="tag">烈焰</li>
+        	<li class="tag">干将莫邪</li>
+        </ul>
+    </nav>
+    
+    <script type="text/javascript">
+		var banner = document.getElementById('banner');
+		banner.onmousemove = function(e) {
+		if (!e) {
+			e = window.event;
+		}
+		else {
+			e.srcElement = e.target;
+		}
+		console.log(e.srcElement.id);
+		if(e.srcElement.id != 'banner') {
+			var underline = document.getElementById('under-line');
+			underline.style.width = e.srcElement.offsetWidth + 'px';
+			underline.style.marginLeft = e.srcElement.offsetLeft + 'px';
+		}
+	};
+	</script>
+</body>
+</html>

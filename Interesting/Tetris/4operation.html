@@ -1,0 +1,84 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>block按键旋转</title>
+</head>
+
+<body>
+	<canvas id="canvas" width="200" height="400px" style="background-color:#cccccc">
+    	骚年你的浏览器不支持canvas
+    </canvas>
+	
+    <script type="text/javascript">
+		var canvas = document.getElementById("canvas");
+		var rotate = 0; //旋转标志
+		var magLeft = 0;//距上
+		var magTop = 0;//距下
+		var cxt;
+		if(canvas.getContext){
+			ctx = canvas.getContext('2d');
+		}
+		
+		var B0 = new Array(['0000','0000','1100','1100']);
+		var B1 = new Array(['1000','1000','1000','1000'],['0000','0000','0000','1111']);
+		var B2 = new Array(['0000','0000','1100','0110'],['0000','0100','1100','1000']);
+		var B3 = new Array(['0000','0000','0110','1100'],['0000','1000','1100','0100']);
+		var B4 = new Array(['0000','1000','1000','1100'],['0000','0000','1110','1000'],['0000','1100','0100','0100'],['0000','0000','0010','1110']);
+		var B5 = new Array(['0000','0000','0100','1110'],['0000','1000','1100','1000'],['0000','0000','1110','0100'],['0000','0010','0110','0010']);
+		
+		var block = new Array(B0,B1,B2,B3,B4,B5);
+		
+		var c = Math.floor(Math.random()*6);
+		var temp = block[c][0];
+		ref();
+		
+		
+		function keyDown(e) {   
+			var keycode = e.which;
+			if(keycode ==38){
+				if(rotate==block[c].length-1)
+					rotate=0;
+				else
+					rotate++;
+				alert(rotate);
+				temp = block[c][rotate];
+				ref();
+			}
+			else if(keycode ==40){
+				magTop+=20;
+				ref();
+			}
+			else if(keycode ==37&&magLeft>=20){
+				magLeft-=20;
+				ref();
+			}
+			else if(keycode == 39){
+				magLeft+=20;
+				ref();
+			}
+		}
+		document.onkeydown = keyDown;
+		
+		
+		
+		
+		
+		//刷新画面
+		function ref(){
+			
+			ctx.fillStyle = '#cccccc';
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			
+			for(var i = 0;i<temp.length;i++){
+				for(var j = 0;j<temp[i].length;j++){
+					if(temp[i][j] == 1){
+						ctx.strokeStyle = 'yellow';
+						ctx.strokeRect(magLeft + j*20,magTop + i*20,20,20);
+					}
+				}
+			}
+		}
+	</script>
+</body>
+</html>

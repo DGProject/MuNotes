@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="zh_CN">
+  <head>
+    <meta chacharset="utf-8">
+    <title>load frame</title>
+    <style type="text/css">
+      body {
+        background-color: #ed5565;
+      }
+      .loader {
+        width: 90%;
+        margin-top: 30px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      ul li {
+        width: 25%;
+        height: 100px;
+        float: left;
+        list-style: none;
+      }
+      /*-------------load 1效果---------------*/
+      .load1 {
+        width: 50px;
+        height: 50px;
+        border-top: 3px solid white;
+        border-bottom: 3px solid white;
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+        border-radius: 50%;
+        animation: roate-load1 1s ease-in-out infinite;
+      }
+      .load1:before {
+        content:'';
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        margin: 10px;
+        background-color: white;
+        border-radius: 50%;
+        animation: roate-load1-scale 1s ease-in-out infinite;
+      }
+      @keyframes roate-load1 {
+        0% {transform: rotate(0deg);}
+        50% {transform:rotate(180deg) scale(0.5,0.5);}
+        100% {transform: rotate(360deg);}
+      }
+      @keyframes roate-load1-scale {
+        0% {transform: scale(1,1);}
+        33% {transform: scale(0.4,0.4);}
+        66% {transform: scale(0.7,0.7);}
+        88% {transform: scale(0.8,0.8);}
+        88% {transform: scale(0.8,0.8);}
+        100% {transform: scale(1,1);}
+      }
+      /*-------------load 1效果---------------*/
+      
+      /*-------------load 2效果---------------*/
+      .load2>div {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        opacity: 0;
+        border-radius: 50%;
+        background-color: white;
+      }
+      
+      .load2-1 {
+        animation: roate-load2 2s ease-in-out infinite;
+      }
+      .load2-2 {
+        animation: roate-load2 2s ease-in-out 0.3s infinite;
+      }
+      .load2-3 {
+        animation: roate-load2 2s ease-in-out 0.6s infinite;
+      }
+      .load2-4 {
+        animation: roate-load2 2s ease-in-out 0.9s infinite;
+      }
+      @keyframes roate-load2 {
+        0% {transform: scale(0,0);opacity: 1}
+        100% {transform: scale(1,1);opacity: 0}
+      }
+      /*-------------load 2效果---------------*/
+	  
+      /*-------------load 3效果---------------*/
+	  .load3 {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: 2px solid #ed5565;
+        box-shadow: 0px 0px 3px 5px white;
+        background-color: white;
+        animation: roate-load3 2s ease-in-out infinite;
+	  }
+      .load3:before {
+        content: '';
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        margin: 5px;
+        border-radius: 50%;
+        background-color: #ed5565;
+	  }
+      .load3:after {
+        content: '';
+        position: absolute;
+        height: 5px;
+        width: 5px;
+        margin-left: 4px;
+        margin-top: 1px;
+        border-radius: 50%;
+        background-color: #ed5565;
+	  }
+      @keyframes roate-load3 {
+        0% {transform: rotate(0deg);}
+        100% {transform: rotate(360deg);}
+      }
+      /*-------------load 3效果---------------*/
+      
+      /*-------------load 4效果---------------*/
+      .load4>div {
+        width: 5px;
+        height: 26px;
+        float: left;
+        margin-left: 5px;
+        background-color: white;
+      }
+      .load4>div:nth-child(1) {
+        animation: roate-load4 1s ease-in-out infinite;
+      }
+      .load4>div:nth-child(2) {
+        animation: roate-load4 1s ease-in-out 0.2s infinite;
+      }
+      .load4>div:nth-child(3) {
+        animation: roate-load4 1s ease-in-out 0.4s infinite;
+      }
+      .load4>div:nth-child(4) {
+        animation: roate-load4 1s ease-in-out 0.6s infinite;
+      }
+      @keyframes roate-load4 {
+        0% {transform: scale(1,1);}
+        50% {transform: scale(1,0.5);}
+        100% {transform: scale(1,1);}
+      }
+      /*-------------load 4效果---------------*/
+      
+      /*-------------load 5效果---------------*/
+      .load5 {
+		width: 10px;
+		height: 10px;
+        animation: roate-load5 2s ease-in-out infinite; 
+      }
+      .load5>div {
+        width: 10px;
+        height: 10px;
+        background-color: white;
+        position: absolute;
+        padding-left: 25px;
+        padding-right: 25px;
+        margin-left: -25px;
+        border-radius: 50%;
+      }
+      .load5>div:nth-child(1) {
+      }
+      .load5>div:nth-child(2) {
+        transform: rotate(40deg);
+      }
+      .load5>div:nth-child(3) {
+        transform: rotate(80deg);
+      }
+      .load5>div:nth-child(4) {
+        transform: rotate(120deg);
+      }
+      .load5>div:nth-child(5) {
+        transform: rotate(160deg);
+      }
+      .load5>div:nth-child(6) {
+        transform: rotate(200deg);
+      }
+      .load5>div:nth-child(7) {
+        transform: rotate(240deg);
+      }
+      .load5>div:nth-child(8) {
+        transform: rotate(280deg);
+      }
+      .load5>div:nth-child(9) {
+        transform: rotate(320deg);
+      }
+      @keyframes roate-load5 {
+        0% {transform:rotate(0deg);}
+        100% {transform:rotate(360deg);}
+      }
+      /*-------------load 5效果---------------*/
+      
+      /*-------------load 6效果---------------*/
+      .load6 {
+        width: 50px;
+        height: 50px;
+        border-top: 3px solid white;
+        border-bottom: 3px solid white;
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+        border-radius: 50%;
+        animation: roate-load6 1s ease-in-out infinite;
+      }
+      .load6:before {
+        content:'';
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        margin: 10px;
+        border-top: 3px solid white;
+        border-bottom: 3px solid white;
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+        border-radius: 50%;
+        animation: roate-load6-before 1s ease-in-out infinite;
+      }
+      @keyframes roate-load6 {
+        0% {transform: rotate(0deg);}
+        50% {transform:rotate(180deg) scale(0.5,0.5);}
+        100% {transform: rotate(360deg);}
+      }
+      @keyframes roate-load6-before {
+        0% {transform: rotate(0deg) scale(1,1);}
+        50% {transform: rotate(-540deg) scale(1.5,1.5);}
+        100% {transform: rotate(-1080deg) scale(1,1);}
+      }
+      /*-------------load 6效果---------------*/
+      
+      /*-------------load 7效果---------------*/
+      .load7 {
+        width: 20px;
+        height: 20px;
+        transform: rotate(-30deg);
+        animation: roate-load7 1s ease-in-out infinite;
+      }
+      .load7:before {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: white;
+        margin-top: -20px;
+        border-radius: 50%;
+        animation: roate-load7-before 0.5s ease-in-out infinite;
+      }
+      .load7:after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: white;
+        margin-top: 20px;
+        border-radius: 50%;
+        animation: roate-load7-after 0.5s ease-in-out infinite;
+      }
+      @keyframes roate-load7 {
+        0% {transform: rotate(-30deg);}
+        50% {transform: rotate(30deg);}
+        100% {transform: rotate(-30deg);}
+      }
+      @keyframes roate-load7-before {
+        0% {margin-top: -20px;}
+        50% {margin-top: -10px;}
+        100% {margin-top: -20px;}
+      }
+      @keyframes roate-load7-after {
+        0% {margin-top: 20px;}
+        50% {margin-top: 10px;}
+        100% {margin-top: 20px;}
+      }
+      /*-------------load 7效果---------------*/
+      
+      /*-------------load 8效果---------------*/
+      .load8>div {
+        position: relative;
+        width:10px;
+        height: 10px;
+        float: left;
+        margin: -5px;
+        border-radius: 50%;
+        background-color: white;
+      }
+      .load8>div:nth-child(1) {
+        animation: roate-load8 0.6s ease-in-out infinite;
+      }
+      .load8>div:nth-child(2) {
+        left: 13px;
+        animation: roate-load8 0.6s ease-in-out 0.2s infinite;
+      }
+      .load8>div:nth-child(3) {
+        left: 26px;
+        animation: roate-load8 0.6s ease-in-out 0.4s infinite;
+      }
+      @keyframes roate-load8 {
+        0% {margin-top: -5px;}
+        50% {margin-top: 5px;}
+        100% {margin-top: -5px;}
+      }
+      /*-------------load 8效果---------------*/
+      
+      /*-------------load 9效果---------------*/
+      .load9 {
+        
+        width: 30px;
+        height: 30px;
+        border-top: 3px solid white;
+        border-bottom: 3px solid white;
+        border-left: 3px solid white;
+        border-right: 3px solid transparent;
+        border-radius: 50%;
+        animation: roate-load9 1.5s ease-in-out infinite;
+      }
+      
+      @keyframes roate-load9 {
+        0% {transform: rotate(0deg);}
+        100% {transform: rotate(360deg);}
+      }
+      /*-------------load 9效果---------------*/
+      
+      /*-------------load 10效果---------------*/
+      .load10>div {
+        width: 5px;
+        height: 26px;
+        float: left;
+        margin-left: 5px;
+        background-color: white;
+      }
+      .load9>div:nth-child(1) {
+        animation: roate-load10 1s ease-in-out infinite;
+      }
+      .load9>div:nth-child(2) {
+        animation: roate-load10 1s ease-in-out 0.2s infinite;
+      }
+      .load9>div:nth-child(3) {
+        animation: roate-load10 1s ease-in-out 0.4s infinite;
+      }
+      .load9>div:nth-child(4) {
+        animation: roate-load10 1s ease-in-out 0.6s infinite;
+      }
+      @keyframes roate-load10 {
+        0% {transform: scale(1,1);}
+        50% {transform: scale(1,0.5);}
+        100% {transform: scale(1,1);}
+      }
+      /*-------------load 10效果---------------*/
+    </style>
+  </head>
+  <body>
+    <div class="loader">
+      <ul>
+        <li>
+          <div class="load1"></div>
+        </li>
+        <li>
+          <div class="load2">
+            <div class="load2-1"></div>
+            <div class="load2-2"></div>
+            <div class="load2-3"></div>
+            <div class="load2-4"></div>
+          </div>
+        </li>
+        <li>
+          <div class="load3"></div>
+        </li>
+        <li>
+          <div class="load4">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </li>
+        <li>
+          <div class="load5">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </li>
+        <li>
+          <div class="load6">
+          </div>
+        </li>
+        <li>
+          <div class="load7">
+          </div>
+        </li>
+        <li>
+          <div class="load8">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </li>
+        <li>
+          <div class="load9">
+          </div>
+        </li>
+        <li>
+          <div class="load10">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

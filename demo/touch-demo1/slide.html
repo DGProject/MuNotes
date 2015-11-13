@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>滑动页</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .slide {
+        width: 100%;
+        height: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: aqua;
+        overflow: hidden;
+      }
+      .slide .box {
+        width: 400%;
+        height: 400px;
+      }
+      .slide .box>div {
+        float: left;
+        width: 25%;
+        height: 400px;
+      }
+      .slide .box>div:nth-child(1) {
+        background-color: red;
+      }
+      .slide .box>div:nth-child(2) {
+        background-color: green;
+      }
+      .slide .box>div:nth-child(3) {
+        background-color: blue;
+      }
+      .slide .box>div:nth-child(4) {
+        background-color:blueviolet;
+      }
+      .extra {
+        height: 800px;
+        width: 100vw;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="slide">
+      <div id='box' class="box">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </section>
+    <section class="extra">
+    </section>
+    
+    <script type="text/javascript">
+      var box = document.getElementById('box');
+      var pressX = 0,pressY = 0;
+      var iniX = 0;
+	  var direction = 0; //方向 1左右 2上下
+	  var ceiling = 3;
+	  var count = 0;
+      box.addEventListener('touchmove',function(event) {
+		
+        if(event.targetTouches.length == 1) {
+          var touch = event.targetTouches[0];
+          var spanX = touch.pageX-pressX;
+          var spanY = touch.pageY-pressY;
+          
+          /* 判断上下左右
+          count++;
+          if(count == ceiling) {
+            if(Math.abs(spanX)>Math.abs(spanY)) {
+              if(spanX > 0) {
+                direction = 3;
+                console.log('右');
+              } else {
+                direction = 2;
+                console.log('左');
+              }
+            } else {
+              if(spanY > 0) {
+                direction = 1;
+                console.log('下');
+              } else {
+                direction = 0;
+                console.log('上');
+              }
+            }
+          }
+          */
+          
+          //判断是否是左右移动还是上下移动
+          count++;
+          if(count == ceiling) {
+            if(Math.abs(spanX)>Math.abs(spanY)) {
+              direction = 1;
+            } else {
+              direction = 2;
+            }
+          }
+          if(direction == 1) {
+            if(box.offsetLeft>=0) {
+              if(spanX>=0) {
+                box.style.marginLeft = '0px';
+              }
+              else {
+                box.style.marginLeft = iniX + spanX + 'px';
+              }
+            } else {
+              box.style.marginLeft = iniX + spanX + 'px';
+            }
+            if(box.offsetLeft <= -3*document.body.clientWidth) {
+              if(spanX<=0) {
+                box.style.marginLeft = -3 * document.body.clientWidth+'px';
+              } else {
+                box.style.marginLeft = iniX + spanX + 'px';
+              }
+            }
+          } else {
+            var scrollHeight = document.body.scrollTop;
+            window.scrollTo(0,scrollHeight - spanY);
+          }
+        }
+        event.preventDefault();
+      }, false);
+      box.addEventListener('touchstart',function(event) {
+        if(event.targetTouches.length == 1) {
+          var touch = event.targetTouches[0];
+          pressX = touch.pageX;
+          pressY = touch.pageY;
+          iniX = box.offsetLeft;
+        }
+      }, false);
+      box.addEventListener('touchend',function(event){
+        box.style.cssText = "transition: all 0.5s;margin-left:"+Math.round(box.offsetLeft/document.body.clientWidth)*100+'%';
+        count = 0;
+        direction = 0;
+        setTimeout(cancle,500);
+      }, false);
+      function cancle() {
+        box.style.cssText = 'transition: all 0s;margin-left:'+Math.round(box.offsetLeft/document.body.clientWidth)*100+'%';
+      }
+      
+      ////////////////////////////////////滚动条调到最底部//////////////////////////
+	  //滚动条在Y轴上的滚动距离  
+      function getScrollTop(){
+        var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+        if(document.body){
+          bodyScrollTop = document.body.scrollTop;
+        }
+        if(document.documentElement){
+          documentScrollTop = document.documentElement.scrollTop;
+        }
+        scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+        return scrollTop;
+      } 
+     //文档的总高度 
+      function getScrollHeight(){
+        var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+        if(document.body){
+          bodyScrollHeight = document.body.scrollHeight;
+        }
+        if(document.documentElement){
+          documentScrollHeight = document.documentElement.scrollHeight;
+        }
+        scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+        return scrollHeight;
+     } 
+     //浏览器视口的高度
+      function getWindowHeight(){
+        var windowHeight = 0;
+        if(document.compatMode == "CSS1Compat"){
+          windowHeight = document.documentElement.clientHeight;
+        }else{
+          windowHeight = document.body.clientHeight;
+        }
+        return windowHeight;
+      }
+      window.onscroll = function(){
+        if(getScrollTop() + getWindowHeight() == getScrollHeight()){
+          alert("you are in the bottom!");
+        }
+      };
+    </script>
+  </body>
+</html>

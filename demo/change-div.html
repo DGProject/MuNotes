@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>切换div</title>
+    <style type="text/css">
+      body,div,ul,li {
+        margin: 0;
+        padding: 0;
+      }
+      #container {
+        width: 80vw;
+        margin: 0 auto;
+      }
+      #container>ul>li {
+        width: 8vw;
+        height: 300px;
+        list-style: none;
+        float: left;
+        position: relative;
+        transition: 0.3s;
+      }
+      #container>ul>li:nth-child(1) {
+        background-color:coral;
+      }
+      #container>ul>li:nth-child(2) {
+        background-color: aqua;
+      }
+      #container>ul>li:nth-child(3) {
+        background-color: blueviolet;
+      }
+      #container>ul>li:nth-child(4) {
+        background-color: fuchsia;
+      }
+      #container>ul>li:nth-child(5) {
+        background-color: chartreuse;
+      }
+      #container>ul>li>img {
+        width: 5vw;
+        position:absolute;
+        top:50%;
+        left: 50%;
+        transition: 0.3s;
+        transform: translateX(-50%) translateY(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <ul>
+        <li><img src="image/change-div/moment.png"></li>
+        <li><img src="image/change-div/home-work.png"></li>
+        <li><img src="image/change-div/food.png"></li>
+        <li><img src="image/change-div/news.png"></li>
+        <li><img src="image/change-div/notice.png"></li>
+      </ul>
+    </div>
+    
+    <script type="text/javascript">
+      window.onload = function() {
+        var iniActive = ['48vw','7vw'];
+        var iniElement = ['8vw','5vw'];
+        var box = document.getElementById('container');
+        var boxItem = box.getElementsByTagName('ul')[0].getElementsByTagName('li');
+        changeWidth(boxItem[0],iniActive);
+        for(var li = 0; li < boxItem.length; li++) {
+          boxItem[li].onclick = function() {
+            for(var i =0; i < boxItem.length; i++) {
+              if(boxItem[i].offsetWidth = '48vw') {
+                changeWidth(boxItem[i],iniElement);
+              }
+            }
+            var _this = this;
+            changeWidth(_this,iniActive);
+          }
+        }
+      }
+      function changeWidth(father,range) {
+        father.style.width = range[0];
+        var img = father.getElementsByTagName('img')[0];
+        img.style.width = range[1];
+      }
+    </script>
+  </body>
+</html>

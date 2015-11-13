@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <title>动态分页</title>
+        <style type="text/css">
+			body {
+				font-family: '微软雅黑';
+			}
+			div,ul,li {
+				margin: 0;
+				padding: 0;
+			}
+			ul,li {
+				list-style: none;
+			}
+			#btnShow {
+				width: 100px;
+				height: 40px;
+				background: #3385ff;
+				margin: 100px;
+				text-align: center;
+				line-height: 40px;
+				color: white;
+				cursor: pointer;
+			}
+			#showItem {
+				position: absolute;
+				height: 0px;
+				width: 350px;
+				overflow: hidden;
+				box-shadow: 0 0 3px #666666;
+			}
+			#showItem .box {
+				transition: all 0.5s;
+				height: 150px;
+				overflow: hidden;
+			}
+			#showItem .box .item {
+				width: 350px;
+				height: 150px;
+				float: left;
+			}
+			#showItem .box .item li {
+				margin: 10px auto;
+				float: left;
+				width: 25%;
+				font-size:12px;
+				text-align: center;
+			}
+			#showItem .nav {
+				margin: 0 auto;
+				padding-bottom: 5px;
+				overflow: hidden;
+			}
+			#showItem .nav li {
+				float: left;
+				width: 10px;
+				height: 10px;
+				margin-left: 10px;
+				border-radius: 50%;
+				background: #666666;
+				-moz-border-radius: 50%;
+				-webkit-border-radius: 50%;
+			}
+			#showItem .nav .active {
+				background:#3385ff;
+			}
+        </style>
+    </head>
+    <body>
+        <div id="btnShow">显示</div>
+        <div id="showItem">
+			<div class="box">
+				<ul class="item">
+					<li>一年1班</li>
+					<li>一年2班</li>
+					<li>一年3班</li>
+					<li>一年4班</li>
+					<li>一年5班</li>
+					<li>一年6班</li>
+					<li>一年7班</li>
+					<li>一年8班</li>
+					<li>一年9班</li>
+					<li>一年10班</li>
+					<li>一年11班</li>
+					<li>一年12班</li>
+					<li>一年13班</li>
+					<li>一年14班</li>
+					<li>一年15班</li>
+					<li>一年16班</li>
+					<li>一年17班</li>
+					<li>一年18班</li>
+					<li>一年19班</li>
+					<li>一年20班</li>
+					<li>一年21班</li>
+					<li>一年22班</li>
+					<li>一年23班</li>
+					<li>一年24班</li>
+					<li>一年18班</li>
+					<li>一年19班</li>
+					<li>一年20班</li>
+					<li>一年21班</li>
+					<li>一年22班</li>
+					<li>一年23班</li>
+					<li>一年24班</li>
+					<li>一年18班</li>
+					<li>一年19班</li>
+					<li>一年20班</li>
+					<li>一年21班</li>
+					<li>一年22班</li>
+					<li>一年23班</li>
+					<li>一年24班</li>
+					<li>一年18班</li>
+					<li>一年19班</li>
+					<li>一年20班</li>
+					<li>一年21班</li>
+					<li>一年22班</li>
+					<li>一年23班</li>
+					<li>一年24班</li>
+					<li>一年18班</li>
+					<li>一年19班</li>
+					<li>一年20班</li>
+					<li>一年21班</li>
+					<li>一年22班</li>
+					<li>一年23班</li>
+					<li>一年24班</li>
+				</ul>
+			</div>
+            <ul class='nav'>
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+		<script src="six1.js"></script>
+    </body>
+</html>

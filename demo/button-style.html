@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>按钮样式</title>
+    <style type="text/css">
+      .btn {
+        padding: .3em .8em;
+        padding: 6px 16px;
+        border: 1px solid #446d88;
+        background: #c2455a linear-gradient(#e399a6,#c2455a);
+        border-radius: 4px;
+        box-shadow: 0 1px 5px gray;
+        color: white;
+        text-shadow: 0 -1px 1px #963243;
+        font-size: 20px;
+        line-height: 1.5;
+        text-decoration: none;
+        transition: all 1s;
+      }
+      .btn:hover {
+        background: #d45d71 linear-gradient(#df7c8d,#d45d71);
+      }
+      .btn:active {
+        background: #c0354d linear-gradient(#d45d71,#c0354d);
+      }
+      button {
+        padding: .3em .8em;
+        border: 1px solid rgba(0,0,0,.1);
+        background: #58a linear-gradient(hsla(0,0%,100%,.2),transparent);
+        border-radius: .2em;
+        box-shadow: 0 .05em .25em rgba(0,0,0,.5);
+        color: white;
+        text-shadow: 0 -.05em .05em rgba(0,0,0,.5);
+        font-size: 125%;
+        line-height: 1.5;
+      }
+      button.ok {
+        background-color: #6b0;
+      }
+      button.calcle {
+        background-color: #c00;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="##" class="btn">beaftiful</a>
+    <button class="ok">OK</button>
+    <button class="calcle">Cancel</button>
+  </body>
+</html>

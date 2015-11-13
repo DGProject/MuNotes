@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>导航</title>
+    <style type="text/css">
+      body,div,nav,ul,li {
+        margin: 0;
+        padding: 0;
+        font-family: 'Microsoft YaHei';
+      }
+      .nav {
+        width: 100vw;
+        border-bottom: 1px solid #485733;
+        overflow: hidden;
+      }
+      .nav #box ul li {
+        float: left;
+        list-style: none;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+        <div id="box">
+          <ul>
+            <li>理想</li>
+            <li>自卑</li>
+            <li>自信</li>
+            <li>不怕输</li>
+            <li>跪求yi败</li>
+            <li>不怕输</li>
+            <li>跪求yi败</li>
+          </ul>
+        </div>
+    </ul>
+    
+    <script type="text/javascript">
+      window.onload = function() {
+        var box = document.getElementById('box');
+        var ilItem = box.getElementsByTagName('ul')[0].getElementsByTagName('li');
+        var ilItemWidth = 0;
+        var pressX = 0;
+        var pressY = 0;
+        var iniX = 0;
+        for(var i = 0; i < ilItem.length; i++) {
+          ilItemWidth += ilItem[i].offsetWidth;
+          console.log(ilItem[i].offsetWidth);
+        }
+        //+1容错
+        box.style.width = (ilItemWidth+1)+'px';
+        
+        box.addEventListener('touchstart',function(e) {
+          if(e.targetTouches.length > 0) {
+            var touch = e.targetTouches[0];
+            pressX = touch.pageX;
+            pressY = touch.pageY;
+            iniX = box.offsetLeft;
+          }
+        },false);
+        box.addEventListener('touchmove',function(e) {
+          if(e.targetTouches.length > 0) {
+            var touch = e.targetTouches[0];
+            var spanX = touch.pageX-pressX;
+            var spanY = touch.pageY-pressY;
+            if(ilItemWidth > document.body.clientWidth) {
+              if(box.offsetLeft >= 0) {
+                if(spanX < 0) {
+                  box.style.marginLeft = iniX + spanX + 'px';
+                } else {
+                  box.style.marginLeft = '0px';
+                }
+              } else {
+                box.style.marginLeft = iniX + spanX + 'px';
+              }
+              var maxLeft = document.body.clientWidth - box.offsetWidth;
+              if(box.offsetLeft <= maxLeft) {
+                if(spanX > 0) {
+                  box.style.marginLeft = iniX + spanX + 'px';
+                } else {
+                  box.style.marginLeft = maxLeft +'px';
+                }
+              }
+            }
+          }
+          event.preventDefault();
+        },false);
+        window.onresize = function() {
+          var maxLeft = document.body.clientWidth - box.offsetWidth;
+          if(box.offsetLeft < 0) {
+            if(box.offsetLeft <= maxLeft) {
+              if(maxLeft > 0){
+                maxLeft = 0
+              }
+              box.style.marginLeft = maxLeft +'px';
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
